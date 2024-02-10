@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "number"
+        },
+        "Price": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "generation": {
+          "type": "string"
+        },
+        "Generation": {
+          "type": "string"
+        },
+        "Screen size": {
+          "type": "number"
+        },
+        "Capacity": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "id", "name", "data"
+  ]
+}
