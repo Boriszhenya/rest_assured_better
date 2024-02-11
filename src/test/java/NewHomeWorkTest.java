@@ -20,12 +20,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class HomeWorkTest extends BaseTest {
+public class NewHomeWorkTest extends BaseHomeWorkTest {
+    static String token = "e2d891897138eafe9cddfe43eeebf508ae3b2ddfbb8920fdc3088e1a757d7368";
 
     @BeforeEach
     public void setUp() {
-        // "Документация" по вызовам - https://restful-api.dev/
-        RestAssured.baseURI = getConfig("baseURI");
+         RestAssured.baseURI = getConfig("baseURI");
+
     }
 
     // Ваша задача написать по одному тесту на каждый вызов:
@@ -36,6 +37,7 @@ public class HomeWorkTest extends BaseTest {
         sendGetRequest(getConfig("objectPath"))
                 .assertThat()
                 .body("$", hasSize(6));
+        System.out.println(token);
     }
 
     // 2. Для вызова GET LIST OF OBJECTS BY IDS проверьте,
