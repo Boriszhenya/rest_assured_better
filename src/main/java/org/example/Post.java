@@ -2,17 +2,22 @@ package org.example;
 
 public class Post {
     private int id;
-    private int userID;
+    private int user_id;
     private String title;
     private String body;
 
-    public int getUserID() {
-        return userID;
+    public int getID() { return id; }
+    public void setID(int value) { this.id = value; }
+
+
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
+
 
     public String getTitle() {
         return title;
@@ -22,6 +27,7 @@ public class Post {
         this.title = title;
     }
 
+
     public String getBody() {
         return body;
     }
@@ -30,9 +36,6 @@ public class Post {
         this.body = body;
     }
 
-    public int getId() {
-        return id;
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -41,7 +44,7 @@ public class Post {
 
         Post post = (Post) obj;
 
-        return getUserID() == post.getUserID() &&
+        return getUser_id() == post.getUser_id() &&
                 getTitle().equals(post.getTitle()) &&
                 getBody().equals(post.getBody());
     }
@@ -50,7 +53,7 @@ public class Post {
     public String toString() {
         return "Post {" +
                 "id = " + id + "'," +
-                "userId = " + userID + "'," +
+                "userId = " + user_id + "'," +
                 "title = '" + title + "'," +
                 "body = '" + body + '\'' +
                 '}';

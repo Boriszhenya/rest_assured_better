@@ -3,6 +3,7 @@ import Utils.TestDataHelper;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.example.NewUser;
+import org.example.Post;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,14 +30,6 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
                 .body("$", hasSize(10));
     }
 
-    @Test
-    public void getListOfAllObjects() {
-
-        sendGetRequest(getConfig("objectPathV2")
-                + getConfig("endPointUsers"))
-                .assertThat()
-                .body("$", hasSize(10));
-    }
 
     @Test
     public void getListParamObjects() {
@@ -51,7 +44,7 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
 
     @Test
     public void schemeUserValidationTest() {
-        String objId = "6313270";
+        String objId = "6392611";
 
         sendGetRequest(
                 given().pathParams("id", objId),
@@ -64,11 +57,11 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
     @Test
     public void newUserCreation() {
 
-        NewUser newUser = TestDataHelper.createClient();
+        NewUser newUser = TestDataHelper.createUser();
 
         NewUser actualClient =
-                ApiWrapper.sendPostRequest(
-                        (getConfig("objectPathV2") + getConfig("endPointUsers")),
+                ApiWrapper.sendPostRequest
+                        ((getConfig("objectPathV2") + getConfig("endPointUsers")),
                         newUser,
                         NewUser.class,
                         getConfig("objectToken"));
@@ -76,6 +69,38 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
         assertEquals(actualClient, newUser);
     }
 
+    @Test
+    public void schemePostValidationTest() {
+        String objId = "6392612";
+
+        sendGetRequest(
+                given().pathParams("id", objId),
+                getConfig("objectPathV2")
+                        + getConfig("objectIdPath")
+                        + getConfig("objectPostPath"))
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("post-schema.json"));
+    }
+
+    @Test
+    public void newPostCreation() {
+        String objId = "6392612";
+
+        Post newPost = TestDataHelper.createPost(objId);
+        System.out.println(newPost);
+            Post actualPost =
+                ApiWrapper.sendPostRequest(
+
+                        given().pathParams("id", objId),
+                        (getConfig("objectPathV2")
+                                + getConfig("objectIdPath")
+                                + getConfig("objectPostPath")),
+                        newPost,
+                        Post.class,
+                        getConfig("objectToken"));
+
+        assertEquals(actualPost, newPost);
+    }
 
 
 }

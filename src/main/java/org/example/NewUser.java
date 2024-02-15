@@ -1,17 +1,17 @@
 package org.example;
 
 public class NewUser {
-    private long id;
+    private int id;
     private String name;
     private String email;
     private String gender;
     private String status;
 
-    public long getID() {
+    public int getID() {
         return id;
     }
 
-    public void setID(long value) {
+    public void setID(int value) {
         this.id = value;
     }
 
@@ -56,9 +56,5 @@ public class NewUser {
                 getEmail().equals(newUser.getEmail())&&
                 getGender().equals(newUser.getGender())&&
                 getStatus().equals(newUser.getStatus());
-
     }
-
-
-
 }

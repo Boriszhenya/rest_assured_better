@@ -10,7 +10,7 @@ import static java.time.LocalTime.now;
 public class TestDataHelper {
     static Faker faker = new Faker();
 
-    public static NewUser createClient(String name) {
+    public static NewUser createUser(String name) {
         NewUser client = new NewUser();
         client.setName(faker.name().firstName() + faker.name().lastName() + now());
         client.setEmail(faker.internet().emailAddress());
@@ -20,8 +20,8 @@ public class TestDataHelper {
         return client;
     }
 
-    public static NewUser createClient() {
-        return createClient("Borisz");
+    public static NewUser createUser() {
+        return createUser("Borisz");
     }
 
 
@@ -35,9 +35,9 @@ public class TestDataHelper {
         return comments;
     }
 
-    public static Post createPost(int userID) {
+    public static Post createPost(String userID) {
         Post post = new Post();
-        post.setUserID(userID);
+        post.setUser_id(Integer.parseInt(userID));
         post.setTitle(faker.lorem().sentence(faker.random().nextInt(2, 6)));
         post.setBody(faker.lorem().sentence(faker.random().nextInt(8, 18)));
 
