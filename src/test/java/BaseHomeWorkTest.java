@@ -12,6 +12,7 @@ public class BaseHomeWorkTest {
     @BeforeAll
     public static void globalSetUp() {
         properties = new Properties();
+        //RestAssured.filters(new AllureRestAssured());
         try {
             FileInputStream fileInputStream = new FileInputStream("src/main/resources/config_homework.properties");
             properties.load(fileInputStream);

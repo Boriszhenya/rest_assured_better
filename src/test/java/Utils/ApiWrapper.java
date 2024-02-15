@@ -3,25 +3,29 @@ package Utils;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.example.GadgetPost;
 
 import static io.restassured.RestAssured.given;
 
 public class ApiWrapper {
     private final static int DEFAULT_STATUS_CODE = 200;
-    public static GadgetPost sendPostRequest(String endpoint, GadgetPost requestBody) {
+    private final static int DEFAULT_STATUS_CODE_POST = 201;
+    public static <T> T sendPostRequest(String endpoint, T requestBody, Class<T> responseType, String token) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(requestBody)
+                .header("Authorization", "Bearer "+ token)
                 .when()
+               // .log().all()
                 .post(endpoint)
                 .then()
                 .assertThat()
-                .statusCode(DEFAULT_STATUS_CODE)
+                .statusCode(DEFAULT_STATUS_CODE_POST)
                 .contentType(ContentType.JSON)
+                //.log().all()
                 .log().ifValidationFails()
-                .extract().as(GadgetPost.class);
+                .extract().as(responseType);
     }
+
 
     public static ValidatableResponse sendGetRequest(RequestSpecification requestSpecification, String callPath, int statusCode){
         return given()

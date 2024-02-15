@@ -2,16 +2,16 @@ package org.example;
 
 public class Post {
     private int id;
-    private int userId;
+    private int userID;
     private String title;
     private String body;
 
-    public int getUserId() {
-        return userId;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getTitle() {
@@ -41,7 +41,7 @@ public class Post {
 
         Post post = (Post) obj;
 
-        return getUserId() == post.getUserId() &&
+        return getUserID() == post.getUserID() &&
                 getTitle().equals(post.getTitle()) &&
                 getBody().equals(post.getBody());
     }
@@ -50,7 +50,7 @@ public class Post {
     public String toString() {
         return "Post {" +
                 "id = " + id + "'," +
-                "userId = " + userId + "'," +
+                "userId = " + userID + "'," +
                 "title = '" + title + "'," +
                 "body = '" + body + '\'' +
                 '}';
