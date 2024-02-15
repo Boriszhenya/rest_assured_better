@@ -2,6 +2,7 @@ import Utils.ApiWrapper;
 import Utils.TestDataHelper;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
+import org.example.Comments;
 import org.example.NewUser;
 import org.example.Post;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NewHomeWorkTest extends BaseHomeWorkTest {
 
+
     @BeforeEach
     public void setUp() {
         RestAssured.baseURI = getConfig("baseURIGorest");
         RestAssured.filters(new AllureRestAssured());
+
     }
 
     @Test
@@ -43,8 +46,21 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
     }
 
     @Test
+    public void getDetailsIdUserTest() {
+        int objId = 6392594;
+
+        sendGetRequest(
+                given().pathParams("id", objId),
+                getConfig("objectPathV2")
+                        + getConfig("objectIdPath"))
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("user-schema.json"));
+    }
+
+
+    @Test
     public void schemeUserValidationTest() {
-        String objId = "6392611";
+        int objId = 6392594;
 
         sendGetRequest(
                 given().pathParams("id", objId),
@@ -71,7 +87,7 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
 
     @Test
     public void schemePostValidationTest() {
-        String objId = "6392612";
+        int objId = 6392594;
 
         sendGetRequest(
                 given().pathParams("id", objId),
@@ -84,7 +100,7 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
 
     @Test
     public void newPostCreation() {
-        String objId = "6392612";
+        int objId = 6392594;
 
         Post newPost = TestDataHelper.createPost(objId);
         System.out.println(newPost);
@@ -101,6 +117,29 @@ public class NewHomeWorkTest extends BaseHomeWorkTest {
 
         assertEquals(actualPost, newPost);
     }
+
+    @Test
+    public void newCommentsPostCreation() {
+        int objId = 6392594;
+
+        Comments newPCommentsPost = TestDataHelper.createComments(objId);
+        System.out.println(newPCommentsPost);
+        Comments actualComments =
+                ApiWrapper.sendPostRequest(
+
+                        given().pathParams("id", objId),
+                        (getConfig("objectPathV2")
+                                + getConfig("objectPostIdPath")
+                                + getConfig("objectCommentsPostPath")),
+                        newPCommentsPost,
+                        Comments.class,
+                        getConfig("objectToken"));
+
+        assertEquals(actualComments, newPCommentsPost);
+    }
+
+
+
 
 
 }

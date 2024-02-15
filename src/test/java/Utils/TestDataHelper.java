@@ -25,7 +25,7 @@ public class TestDataHelper {
     }
 
 
-    public static Comments createComments(long postId) {
+    public static Comments createComments(int postId) {
         Comments comments = new Comments();
         comments.setPostID(postId);
         comments.setName(faker.name().firstName() + faker.name().lastName() + now());
@@ -35,9 +35,9 @@ public class TestDataHelper {
         return comments;
     }
 
-    public static Post createPost(String userID) {
+    public static Post createPost(int userID) {
         Post post = new Post();
-        post.setUser_id(Integer.parseInt(userID));
+        post.setUserId(userID);
         post.setTitle(faker.lorem().sentence(faker.random().nextInt(2, 6)));
         post.setBody(faker.lorem().sentence(faker.random().nextInt(8, 18)));
 
