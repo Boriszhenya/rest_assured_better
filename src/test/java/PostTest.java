@@ -14,9 +14,10 @@ public class PostTest extends BaseHomeWorkTest {
 
     @Test
     public void schemePostValidationTest() {
+        int postUserId = getId("objectPostPath", "user_id");
 
         sendGetRequest(
-                given().pathParams("id", getPostUserId()),
+                given().pathParams("id", postUserId),
                 getConfig("objectPathV2")
                         + getConfig("objectIdPath")
                         + getConfig("objectPostPath"))
@@ -26,11 +27,11 @@ public class PostTest extends BaseHomeWorkTest {
 
     @Test
     public void getListParamObjectsPosts() {
-        String page = "5";
-        String perPage = "50";
+        String page = "4";
+        String perPage = "80";
 
-        sendGetRequest(given().pathParams("page",
-                        page, "perPage", perPage),
+        sendGetRequest(given().pathParams("page", page,
+                        "perPage", perPage),
                 (getConfig("objectPathV2")
                         + getConfig("objectPostPath")
                         + "?page={page}&per_page={perPage}"))
@@ -41,10 +42,9 @@ public class PostTest extends BaseHomeWorkTest {
 
     @Test
     public void newPostCreation() {
-        int postUserId = getPostUserId();
+        int postUserId = getId("objectPostPath", "user_id");
 
         Post newPost = TestDataHelper.createPost(postUserId);
-        System.out.println(newPost);
         Post actualPost =
                 ApiWrapper.sendPostRequest(
 
@@ -62,7 +62,7 @@ public class PostTest extends BaseHomeWorkTest {
     @Test
     public void deletePost() {
 
-        int postId = getPostId();
+        int postId = getId("objectPostPath", "id");
 
         deleteRequest(given().pathParams("id", postId),
                 getConfig("objectPathV2")

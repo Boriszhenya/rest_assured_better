@@ -34,10 +34,9 @@ public class UsersTest extends BaseHomeWorkTest {
 
     @Test
     public void schemeUserValidationTest() {
-        int objId = getUserId();
-
+        int userId = getId("endPointUsers", "id");
         sendGetRequest(
-                given().pathParams("id", objId),
+                given().pathParams("id", userId),
                 getConfig("objectPathV2")
                         + getConfig("objectIdPath"))
                 .assertThat()
@@ -63,9 +62,9 @@ public class UsersTest extends BaseHomeWorkTest {
     @Test
     public void deleteUser() {
 
-        int objId = getUserId();
+        int userId = getId("endPointUsers", "id");
 
-        deleteRequest(given().pathParams("id", objId),
+        deleteRequest(given().pathParams("id", userId),
                 getConfig("objectPathV2")
                         + getConfig("objectIdPath"),
                 getConfig("objectToken")

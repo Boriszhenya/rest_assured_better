@@ -36,13 +36,12 @@ public class CommentsTest extends BaseHomeWorkTest {
                 .body("$", hasSize(Integer.parseInt(perPage)));
     }
 
-
     @Test
     public void newCommentPostsCreation() {
-        int postId = getPostId();
+        int postId = getId("objectCommentsPostPath", "post_id");
 
         Comments newPCommentsPost = TestDataHelper.createComments(postId);
-        System.out.println(newPCommentsPost);
+
         Comments actualComments =
                 ApiWrapper.sendPostRequest(
 
@@ -60,7 +59,7 @@ public class CommentsTest extends BaseHomeWorkTest {
     @Test
     public void deleteComment() {
 
-        int postId = getIdPost();
+        int postId = getId("objectCommentsPostPath", "id");
 
         deleteRequest(given().pathParams("id", postId),
                 getConfig("objectPathV2")
@@ -68,5 +67,4 @@ public class CommentsTest extends BaseHomeWorkTest {
                 getConfig("objectToken")
         );
     }
-
 }

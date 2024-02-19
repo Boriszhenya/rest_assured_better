@@ -12,10 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TodosTest extends BaseHomeWorkTest {
 
-
     @Test
     public void schemeTodosValidationTest() {
-        //int userId = getToDoUserId();
         int userId = getId("objectToDosPostPath", "user_id");
 
         sendGetRequest(
@@ -29,8 +27,8 @@ public class TodosTest extends BaseHomeWorkTest {
 
     @Test
     public void getListParamObjectsToDos() {
-        String page = "5";
-        String perPage = "50";
+        String page = "2";
+        String perPage = "30";
 
         sendGetRequest(given().pathParams("page",
                         page, "perPage", perPage),
@@ -45,9 +43,7 @@ public class TodosTest extends BaseHomeWorkTest {
     @Test
     public void newTodoUsersCreation() {
 
-        //int userId = getUserId();
         int userId = getId("endPointUsers", "id");
-        System.out.println();
 
         Todos newUsersTodo = TestDataHelper.createTodos(userId);
 
@@ -67,7 +63,6 @@ public class TodosTest extends BaseHomeWorkTest {
     @Test
     public void deleteToDo() {
 
-//        int userId = getToDoId();
         int userId = getId("objectToDosPostPath", "id");
 
         deleteRequest(given().pathParams("id", userId),
@@ -76,5 +71,4 @@ public class TodosTest extends BaseHomeWorkTest {
                 getConfig("objectToken")
         );
     }
-
 }
