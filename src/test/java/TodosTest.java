@@ -20,7 +20,8 @@ public class TodosTest extends BaseHomeWorkTest {
                 given().pathParams("id", userId),
                 getConfig("objectPathV2")
                         + getConfig("objectIdPath")
-                        + getConfig("objectToDosPostPath"))
+                        + getConfig("objectToDosPostPath")
+        )
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("todos-schema.json"));
     }
@@ -30,11 +31,13 @@ public class TodosTest extends BaseHomeWorkTest {
         String page = "2";
         String perPage = "30";
 
-        sendGetRequest(given().pathParams("page",
+        sendGetRequest(
+                given().pathParams("page",
                         page, "perPage", perPage),
-                (getConfig("objectPathV2")
+                getConfig("objectPathV2")
                         + getConfig("objectToDosPostPath")
-                        + "?page={page}&per_page={perPage}"))
+                        + "?page={page}&per_page={perPage}"
+        )
                 .assertThat()
                 .body("$", hasSize(Integer.parseInt(perPage)));
     }
@@ -50,12 +53,13 @@ public class TodosTest extends BaseHomeWorkTest {
         Todos actualUsersTodo =
                 ApiWrapper.sendPostRequest(
                         given().pathParams("id", userId),
-                        (getConfig("objectPathV2")
+                        getConfig("objectPathV2")
                                 + getConfig("objectIdPath")
-                                + getConfig("objectToDosPostPath")),
+                                + getConfig("objectToDosPostPath"),
                         newUsersTodo,
                         Todos.class,
-                        getConfig("objectToken"));
+                        getConfig("objectToken")
+                );
 
         assertEquals(actualUsersTodo, newUsersTodo);
     }
@@ -65,7 +69,8 @@ public class TodosTest extends BaseHomeWorkTest {
 
         int userId = getId("objectToDosPostPath", "id");
 
-        deleteRequest(given().pathParams("id", userId),
+        deleteRequest(
+                given().pathParams("id", userId),
                 getConfig("objectPathV2")
                         + getConfig("objectToDosPostIdPath"),
                 getConfig("objectToken")

@@ -39,9 +39,7 @@ public class BaseHomeWorkTest {
                         .get(getConfig("objectPathV2") +
                                 getConfig(endpoint))
                         .then()
-                        //.log().all()
                         .statusCode(200)
-                        //.log().all()
                         .log().ifValidationFails()
                         .extract()
                         .jsonPath()

@@ -17,7 +17,8 @@ public class CommentsTest extends BaseHomeWorkTest {
     public void schemeCommentsValidationTest() {
         sendGetRequest(
                 getConfig("objectPathV2")
-                        + getConfig("objectCommentsPostPath"))
+                        + getConfig("objectCommentsPostPath")
+        )
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("comments-schema.json"));
     }
@@ -27,11 +28,13 @@ public class CommentsTest extends BaseHomeWorkTest {
         String page = "5";
         String perPage = "50";
 
-        sendGetRequest(given().pathParams("page",
+        sendGetRequest(
+                given().pathParams("page",
                         page, "perPage", perPage),
-                (getConfig("objectPathV2")
+                getConfig("objectPathV2")
                         + getConfig("objectCommentsPostPath")
-                        + "?page={page}&per_page={perPage}"))
+                        + "?page={page}&per_page={perPage}"
+        )
                 .assertThat()
                 .body("$", hasSize(Integer.parseInt(perPage)));
     }
@@ -44,14 +47,14 @@ public class CommentsTest extends BaseHomeWorkTest {
 
         Comments actualComments =
                 ApiWrapper.sendPostRequest(
-
                         given().pathParams("id", postId),
-                        (getConfig("objectPathV2")
+                        getConfig("objectPathV2")
                                 + getConfig("objectPostIdPath")
-                                + getConfig("objectCommentsPostPath")),
+                                + getConfig("objectCommentsPostPath"),
                         newPCommentsPost,
                         Comments.class,
-                        getConfig("objectToken"));
+                        getConfig("objectToken")
+                );
 
         assertEquals(actualComments, newPCommentsPost);
     }

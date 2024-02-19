@@ -19,13 +19,13 @@ public class ApiWrapper {
                 .body(requestBody)
                 .header("Authorization", "Bearer " + token)
                 .when()
-                 //.log().all()
+                //.log().all()
                 .post(endpoint)
                 .then()
                 .assertThat()
                 .statusCode(DEFAULT_STATUS_CODE_POST)
                 .contentType(ContentType.JSON)
-                 //.log().all()
+                //.log().all()
                 .log().ifValidationFails()
                 .extract().as(responseType);
     }
@@ -73,7 +73,7 @@ public class ApiWrapper {
                 .statusCode(statusCode);
     }
 
-    public static ValidatableResponse deleteRequest(RequestSpecification requestSpecification, String callPath, String token){
-        return deleteRequest(requestSpecification,  callPath,  token, DEFAULT_STATUS_CODE_DELETE);
+    public static ValidatableResponse deleteRequest(RequestSpecification requestSpecification, String callPath, String token) {
+        return deleteRequest(requestSpecification, callPath, token, DEFAULT_STATUS_CODE_DELETE);
     }
 }

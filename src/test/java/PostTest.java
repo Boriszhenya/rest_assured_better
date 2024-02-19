@@ -20,7 +20,8 @@ public class PostTest extends BaseHomeWorkTest {
                 given().pathParams("id", postUserId),
                 getConfig("objectPathV2")
                         + getConfig("objectIdPath")
-                        + getConfig("objectPostPath"))
+                        + getConfig("objectPostPath")
+        )
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("post-schema.json"));
     }
@@ -30,11 +31,13 @@ public class PostTest extends BaseHomeWorkTest {
         String page = "4";
         String perPage = "80";
 
-        sendGetRequest(given().pathParams("page", page,
+        sendGetRequest(
+                given().pathParams("page", page,
                         "perPage", perPage),
-                (getConfig("objectPathV2")
+                getConfig("objectPathV2")
                         + getConfig("objectPostPath")
-                        + "?page={page}&per_page={perPage}"))
+                        + "?page={page}&per_page={perPage}"
+        )
                 .assertThat()
                 .body("$", hasSize(Integer.parseInt(perPage)));
     }
@@ -47,14 +50,14 @@ public class PostTest extends BaseHomeWorkTest {
         Post newPost = TestDataHelper.createPost(postUserId);
         Post actualPost =
                 ApiWrapper.sendPostRequest(
-
                         given().pathParams("id", postUserId),
-                        (getConfig("objectPathV2")
+                        getConfig("objectPathV2")
                                 + getConfig("objectIdPath")
-                                + getConfig("objectPostPath")),
+                                + getConfig("objectPostPath"),
                         newPost,
                         Post.class,
-                        getConfig("objectToken"));
+                        getConfig("objectToken")
+                );
 
         assertEquals(actualPost, newPost);
     }
@@ -64,7 +67,8 @@ public class PostTest extends BaseHomeWorkTest {
 
         int postId = getId("objectPostPath", "id");
 
-        deleteRequest(given().pathParams("id", postId),
+        deleteRequest(
+                given().pathParams("id", postId),
                 getConfig("objectPathV2")
                         + getConfig("objectPostIdPath"),
                 getConfig("objectToken")

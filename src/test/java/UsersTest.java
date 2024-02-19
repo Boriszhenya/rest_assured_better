@@ -14,10 +14,12 @@ public class UsersTest extends BaseHomeWorkTest {
 
     @Test
     public void getListOfObjects() {
-        sendGetRequest(getConfig("objectPathV2")
-                + getConfig("endPointUsers"))
+        sendGetRequest(
+                getConfig("objectPathV2")
+                        + getConfig("endPointUsers"))
                 .assertThat()
-                .body("$", hasSize(10));
+                .body("$", hasSize(10)
+                );
     }
 
     @Test
@@ -25,8 +27,12 @@ public class UsersTest extends BaseHomeWorkTest {
         String page = "5";
         String perPage = "50";
 
-        sendGetRequest(given().pathParams("page", page, "perPage", perPage), (getConfig("objectPathV2")
-                + getConfig("endPointUsers") + "?page={page}&per_page={perPage}"))
+        sendGetRequest(
+                given().pathParams("page", page,
+                        "perPage", perPage),
+                (getConfig("objectPathV2")
+                        + getConfig("endPointUsers") + "?page={page}&per_page={perPage}")
+        )
                 .assertThat()
                 .body("$", hasSize(Integer.parseInt(perPage)));
     }
@@ -38,7 +44,8 @@ public class UsersTest extends BaseHomeWorkTest {
         sendGetRequest(
                 given().pathParams("id", userId),
                 getConfig("objectPathV2")
-                        + getConfig("objectIdPath"))
+                        + getConfig("objectIdPath")
+        )
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("user-schema.json"));
     }
@@ -49,12 +56,13 @@ public class UsersTest extends BaseHomeWorkTest {
         NewUser newUser = TestDataHelper.createUser();
 
         NewUser actualClient =
-                ApiWrapper.sendPostRequest
-                        ((getConfig("objectPathV2")
-                                        + getConfig("endPointUsers")),
-                                newUser,
-                                NewUser.class,
-                                getConfig("objectToken"));
+                ApiWrapper.sendPostRequest(
+                        (getConfig("objectPathV2")
+                                + getConfig("endPointUsers")),
+                        newUser,
+                        NewUser.class,
+                        getConfig("objectToken")
+                );
 
         assertEquals(actualClient, newUser);
     }
@@ -64,7 +72,8 @@ public class UsersTest extends BaseHomeWorkTest {
 
         int userId = getId("endPointUsers", "id");
 
-        deleteRequest(given().pathParams("id", userId),
+        deleteRequest(
+                given().pathParams("id", userId),
                 getConfig("objectPathV2")
                         + getConfig("objectIdPath"),
                 getConfig("objectToken")
