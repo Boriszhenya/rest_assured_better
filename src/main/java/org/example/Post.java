@@ -1,5 +1,7 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 public class Post {
     private int id;
     private int userId;
@@ -13,9 +15,9 @@ public class Post {
     public int getUserId() {
         return userId;
     }
-
-    public void setUserId(int useRId) {
-        this.userId = useRId;
+    @JsonSetter("user_id")
+    public void setUserId(int userID) {
+        this.userId = userID;
     }
 
 

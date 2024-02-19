@@ -11,6 +11,7 @@ public class NewUser {
         return id;
     }
 
+
     public void setID(int value) {
         this.id = value;
     }

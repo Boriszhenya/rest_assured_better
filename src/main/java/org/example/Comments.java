@@ -1,5 +1,7 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 public class Comments {
     private int id;
     private int postID;
@@ -10,7 +12,9 @@ public class Comments {
     public int getID() { return id; }
     public void setID(int value) { this.id = value; }
 
+    @JsonSetter("post_id")
     public int getPostID() { return postID; }
+    @JsonSetter("post_id")
     public void setPostID(int value) { this.postID = value; }
 
     public String getName() { return name; }

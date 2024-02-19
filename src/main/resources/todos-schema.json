@@ -5,24 +5,24 @@
     "id": {
       "type": "integer"
     },
-    "post_id": {
+    "user_id": {
       "type": "integer"
     },
-    "name": {
+    "title": {
       "type": "string"
     },
-    "email": {
+    "due_on": {
       "type": "string"
     },
-    "body": {
+    "status": {
       "type": "string"
     }
   },
   "required": [
     "id",
-    "post_id",
-    "name",
-    "email",
-    "body"
+    "user_id",
+    "title",
+    "due_on",
+    "status"
   ]
 }

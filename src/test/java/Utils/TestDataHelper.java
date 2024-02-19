@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.example.Comments;
 import org.example.NewUser;
 import org.example.Post;
+import org.example.Todos;
 
 import static java.time.LocalTime.now;
 
@@ -44,6 +45,17 @@ public class TestDataHelper {
         return post;
     }
 
+    public static Todos createTodos(int userID) {
+
+        Todos todos = new Todos();
+
+        todos.setUserID(userID);
+        todos.setTitle(faker.lorem().sentence(faker.random().nextInt(2, 6)));
+        todos.setStatus(faker.random().nextBoolean() ? "pending" : "completed");
+        todos.setDueOn(now().toString());
+
+        return todos;
+    }
 
 
 }
