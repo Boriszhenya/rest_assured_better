@@ -38,9 +38,19 @@ public class Todos {
 
         return getUserID() == todos.getUserID() &&
                 getStatus().equals(todos.getStatus()) &&
-                getTitle().equals(todos.getTitle())
-                /*&&
-                getDueOn().equals(todos.getDueOn()*)*/;
+                getTitle().equals(todos.getTitle())  &&
+                getDueOn().contains(todos.getDueOn());
+    }
+
+    @Override
+    public String toString() {
+        return "Todos{" +
+                "id=" + id +
+                ", userID=" + userID +
+                ", title='" + title + '\'' +
+                ", dueOn='" + dueOn + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
 

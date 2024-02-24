@@ -9,22 +9,46 @@ public class Comments {
     private String email;
     private String body;
 
-    public int getID() { return id; }
-    public void setID(int value) { this.id = value; }
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int value) {
+        this.id = value;
+    }
+
+    public int getPostID() {
+        return postID;
+    }
 
     @JsonSetter("post_id")
-    public int getPostID() { return postID; }
-    @JsonSetter("post_id")
-    public void setPostID(int value) { this.postID = value; }
+    public void setPostID(int value) {
+        this.postID = value;
+    }
 
-    public String getName() { return name; }
-    public void setName(String value) { this.name = value; }
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String value) { this.email = value; }
+    public void setName(String value) {
+        this.name = value;
+    }
 
-    public String getBody() { return body; }
-    public void setBody(String value) { this.body = value; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String value) {
+        this.email = value;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String value) {
+        this.body = value;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -39,5 +63,14 @@ public class Comments {
                 getEmail().equals(comments.getEmail());
     }
 
-
+    @Override
+    public String toString() {
+        return "Comments{" +
+                "id=" + id +
+                ", postID=" + postID +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }

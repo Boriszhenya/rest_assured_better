@@ -6,12 +6,15 @@ import org.example.NewUser;
 import org.example.Post;
 import org.example.Todos;
 
-import static java.time.LocalTime.now;
+import java.time.format.DateTimeFormatter;
+
+import static java.time.LocalDateTime.now;
+
 
 public class TestDataHelper {
     static Faker faker = new Faker();
 
-    public static NewUser createUser(String name) {
+    public static NewUser createUser() {
         NewUser client = new NewUser();
         client.setName(faker.name().firstName() + faker.name().lastName() + now());
         client.setEmail(faker.internet().emailAddress());
@@ -20,11 +23,6 @@ public class TestDataHelper {
 
         return client;
     }
-
-    public static NewUser createUser() {
-        return createUser("Borisz");
-    }
-
 
     public static Comments createComments(int postId) {
         Comments comments = new Comments();
@@ -52,12 +50,10 @@ public class TestDataHelper {
         todos.setUserID(userID);
         todos.setTitle(faker.lorem().sentence(faker.random().nextInt(2, 6)));
         todos.setStatus(faker.random().nextBoolean() ? "pending" : "completed");
-        todos.setDueOn(now().toString());
+        todos.setDueOn(now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")));
 
         return todos;
     }
-
-
 }
 
 

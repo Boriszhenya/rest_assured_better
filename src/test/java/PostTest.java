@@ -3,8 +3,7 @@ import Utils.TestDataHelper;
 import org.example.Post;
 import org.junit.jupiter.api.Test;
 
-import static Utils.ApiWrapper.deleteRequest;
-import static Utils.ApiWrapper.sendGetRequest;
+import static Utils.ApiWrapper.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.hasSize;
@@ -55,8 +54,7 @@ public class PostTest extends BaseHomeWorkTest {
                                 + getConfig("objectIdPath")
                                 + getConfig("objectPostPath"),
                         newPost,
-                        Post.class,
-                        getConfig("objectToken")
+                        Post.class
                 );
 
         assertEquals(actualPost, newPost);
@@ -70,8 +68,44 @@ public class PostTest extends BaseHomeWorkTest {
         deleteRequest(
                 given().pathParams("id", postId),
                 getConfig("objectPathV2")
-                        + getConfig("objectPostIdPath"),
-                getConfig("objectToken")
+                        + getConfig("objectPostIdPath")
         );
+    }
+
+    @Test
+    public void patchTitlePost() {
+
+        int postId = getId("objectPostPath", "id");
+
+        String nameCheckedField = "title";
+        String valueCheckedField = "BORISZ";
+
+        sendPatchRequest(
+                given().pathParams("id", postId),
+                nameCheckedField,
+                valueCheckedField,
+                getConfig("objectPathV2")
+                        + getConfig("objectPostIdPath")
+        );
+    }
+    @Test
+    public void putTitlePost() {
+
+        int userId = getId("objectPostPath", "user_id");
+        int id = getId("objectPostPath", "id");
+
+       Post newPost = TestDataHelper.createPost(id);
+        newPost.setTitle("BORISZ");
+        newPost.setUserId(userId);
+
+        Post actualPost =
+                ApiWrapper.sendPutRequest(
+                        given().pathParams("id", id),
+                        getConfig("objectPathV2")
+                                + getConfig("objectPostIdPath"),
+                        newPost,
+                        Post.class
+                );
+        assertEquals(actualPost, newPost);
     }
 }

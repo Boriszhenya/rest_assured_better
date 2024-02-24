@@ -58,4 +58,15 @@ public class NewUser {
                 getGender().equals(newUser.getGender())&&
                 getStatus().equals(newUser.getStatus());
     }
+
+    @Override
+    public String toString() {
+        return "NewUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

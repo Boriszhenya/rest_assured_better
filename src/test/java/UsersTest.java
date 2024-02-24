@@ -3,8 +3,7 @@ import Utils.TestDataHelper;
 import org.example.NewUser;
 import org.junit.jupiter.api.Test;
 
-import static Utils.ApiWrapper.deleteRequest;
-import static Utils.ApiWrapper.sendGetRequest;
+import static Utils.ApiWrapper.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.hasSize;
@@ -57,11 +56,10 @@ public class UsersTest extends BaseHomeWorkTest {
 
         NewUser actualClient =
                 ApiWrapper.sendPostRequest(
-                        (getConfig("objectPathV2")
-                                + getConfig("endPointUsers")),
+                        getConfig("objectPathV2")
+                                + getConfig("endPointUsers"),
                         newUser,
-                        NewUser.class,
-                        getConfig("objectToken")
+                        NewUser.class
                 );
 
         assertEquals(actualClient, newUser);
@@ -75,10 +73,42 @@ public class UsersTest extends BaseHomeWorkTest {
         deleteRequest(
                 given().pathParams("id", userId),
                 getConfig("objectPathV2")
-                        + getConfig("objectIdPath"),
-                getConfig("objectToken")
+                        + getConfig("objectIdPath")
         );
     }
+
+    @Test
+    public void patchNameUsers() {
+        int userId = getId("endPointUsers", "id");
+
+        String nameCheckedField = "name";
+        String valueCheckedField = "BORISZ";
+
+        sendPatchRequest(
+                given().pathParams("id", userId),
+                nameCheckedField,
+                valueCheckedField,
+                getConfig("objectPathV2")
+                        + getConfig("objectIdPath")
+        );
+    }
+
+    @Test
+    public void putNameUser() {
+
+        int userId = getId("endPointUsers", "id");
+
+        NewUser newUser = TestDataHelper.createUser();
+        newUser.setName("BORISZ");
+
+        NewUser actualClient =
+                ApiWrapper.sendPutRequest(
+                        given().pathParams("id", userId),
+                        getConfig("objectPathV2")
+                                + getConfig("objectIdPath"),
+                        newUser,
+                        NewUser.class
+                );
+        assertEquals(actualClient, newUser);
+    }
 }
-
-

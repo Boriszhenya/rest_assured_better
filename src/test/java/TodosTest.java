@@ -3,8 +3,7 @@ import Utils.TestDataHelper;
 import org.example.Todos;
 import org.junit.jupiter.api.Test;
 
-import static Utils.ApiWrapper.deleteRequest;
-import static Utils.ApiWrapper.sendGetRequest;
+import static Utils.ApiWrapper.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.hasSize;
@@ -57,8 +56,7 @@ public class TodosTest extends BaseHomeWorkTest {
                                 + getConfig("objectIdPath")
                                 + getConfig("objectToDosPostPath"),
                         newUsersTodo,
-                        Todos.class,
-                        getConfig("objectToken")
+                        Todos.class
                 );
 
         assertEquals(actualUsersTodo, newUsersTodo);
@@ -72,8 +70,42 @@ public class TodosTest extends BaseHomeWorkTest {
         deleteRequest(
                 given().pathParams("id", userId),
                 getConfig("objectPathV2")
-                        + getConfig("objectToDosPostIdPath"),
-                getConfig("objectToken")
+                        + getConfig("objectToDosPostIdPath")
         );
+    }
+
+    @Test
+    public void patchTitleTodo() {
+        int userId = getId("objectToDosPostPath", "id");
+
+        String nameCheckedField = "title";
+        String valueCheckedField = "New ToDos";
+
+        sendPatchRequest(
+                given().pathParams("id", userId),
+                nameCheckedField,
+                valueCheckedField,
+                getConfig("objectPathV2")
+                        + getConfig("objectToDosPostIdPath")
+        );
+    }
+
+    @Test
+    public void putTitleTodo() {
+        int userId = getId("objectToDosPostPath", "user_id");
+        int id = getId("objectToDosPostPath", "id");
+
+        Todos newTodos = TestDataHelper.createTodos(userId);
+        newTodos.setTitle("BORIS");
+        newTodos.setID(id);
+        Todos actualTodos =
+                sendPutRequest(
+                        given().pathParams("id", id),
+                        getConfig("objectPathV2")
+                                + getConfig("objectToDosPostIdPath"),
+                        newTodos,
+                        Todos.class
+                );
+        assertEquals(actualTodos, newTodos);
     }
 }
