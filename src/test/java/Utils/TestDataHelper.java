@@ -15,13 +15,13 @@ public class TestDataHelper {
     static Faker faker = new Faker();
 
     public static NewUser createUser() {
-        NewUser client = new NewUser();
-        client.setName(faker.name().firstName() + faker.name().lastName() + now());
-        client.setEmail(faker.internet().emailAddress());
-        client.setGender((faker.demographic().sex()).toLowerCase());
-        client.setStatus(faker.random().nextBoolean() ? "active" : "inactive");
+        NewUser user = new NewUser();
+        user.setName(faker.name().firstName() + faker.name().lastName() + now());
+        user.setEmail(faker.internet().emailAddress());
+        user.setGender((faker.demographic().sex()).toLowerCase());
+        user.setStatus(faker.random().nextBoolean() ? "active" : "inactive");
 
-        return client;
+        return user;
     }
 
     public static Comments createComments(int postId) {

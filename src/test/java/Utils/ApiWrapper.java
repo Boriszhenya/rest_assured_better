@@ -15,12 +15,14 @@ public class ApiWrapper {
     private final static int DEFAULT_STATUS_CODE_PUT = 200;
     private final static int DEFAULT_STATUS_CODE_DELETE = 204;
 
-    private final static String TOKEN = "e2d891897138eafe9cddfe43eeebf508ae3b2ddfbb8920fdc3088e1a757d7368";
+///    public final static String TOKEN = "e2d891897138eafe9cddfe43eeebf508ae3b2ddfbb8920fdc3088e1a757d7368";
 
+    public final static String TOKEN = "056f978451fd22e35ef5745d1e5e5c660b5eac7eab756769808c4fa27765aa44";
 
     public static <T> T sendPostRequest(RequestSpecification requestSpecification,
                                         String endpoint,
                                         T requestBody,
+                                        int statusCode,
                                         Class<T> responseType) {
         return given()
                 .filter(new AuthenticationFilter(TOKEN))
@@ -28,21 +30,32 @@ public class ApiWrapper {
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
-                //.log().all()
+                // .log().all()
                 .post(endpoint)
                 .then()
                 .assertThat()
-                .statusCode(DEFAULT_STATUS_CODE_POST)
+                .statusCode(statusCode)
                 .contentType(ContentType.JSON)
-                //.log().all()
+                // .log().all()
                 .log().ifValidationFails()
                 .extract().as(responseType);
     }
 
     public static <T> T sendPostRequest(String endpoint, T requestBody, Class<T> responseType) {
 
-        return sendPostRequest(given(), endpoint, requestBody, responseType);
+        return sendPostRequest(given(), endpoint, requestBody, DEFAULT_STATUS_CODE_POST, responseType);
     }
+
+    public static <T> T sendPostRequest(String endpoint, T requestBody, int statusCode, Class<T> responseType) {
+
+        return sendPostRequest(given(), endpoint, requestBody, statusCode, responseType);
+    }
+
+    public static <T> T sendPostRequest(RequestSpecification requestSpecification, String endpoint, T requestBody, Class<T> responseType) {
+
+        return sendPostRequest(requestSpecification, endpoint, requestBody, DEFAULT_STATUS_CODE_POST, responseType);
+    }
+
 
     public static <T> T sendPutRequest(RequestSpecification requestSpecification,
                                        String endpoint,
@@ -66,11 +79,12 @@ public class ApiWrapper {
     }
 
 
-    public static void sendPatchRequest(RequestSpecification requestSpecification,
-                                        String nameCheckedField,
-                                        String valueCheckedField,
-                                        String callPath) {
-        given()
+    public static ValidatableResponse sendPatchRequest(RequestSpecification requestSpecification,
+                                                       String nameCheckedField,
+                                                       String valueCheckedField,
+                                                       String callPath,
+                                                       int statusCode) {
+        return given()
                 .filter(new AuthenticationFilter(TOKEN))
                 .spec(requestSpecification)
                 .body("{ \"" + nameCheckedField + "\": \"" + valueCheckedField + "\" }")
@@ -80,10 +94,23 @@ public class ApiWrapper {
                 .patch(callPath)
                 .then()
                 //.log().all()
-                .statusCode(DEFAULT_STATUS_CODE_PATCH)
+                .statusCode(statusCode)
                 .contentType(ContentType.JSON)
                 .log().ifValidationFails()
                 .body(nameCheckedField, equalTo(valueCheckedField));
+    }
+
+
+    public static ValidatableResponse sendPatchRequest(RequestSpecification requestSpecification,
+                                                       String nameCheckedField,
+                                                       String valueCheckedField,
+                                                       String callPath
+    ) {
+        return sendPatchRequest(requestSpecification,
+                nameCheckedField,
+                valueCheckedField,
+                callPath,
+                DEFAULT_STATUS_CODE_PATCH);
     }
 
 
