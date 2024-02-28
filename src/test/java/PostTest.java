@@ -76,7 +76,6 @@ public class PostTest extends BaseHomeWorkTest {
     public void patchTitlePost() {
 
         int postId = getId("objectPostPath", "id");
-
         String nameCheckedField = "title";
         String valueCheckedField = "BORISZ";
 
@@ -88,13 +87,14 @@ public class PostTest extends BaseHomeWorkTest {
                         + getConfig("objectPostIdPath")
         );
     }
+
     @Test
     public void putTitlePost() {
 
         int userId = getId("objectPostPath", "user_id");
         int id = getId("objectPostPath", "id");
 
-       Post newPost = TestDataHelper.createPost(id);
+        Post newPost = TestDataHelper.createPost(id);
         newPost.setTitle("BORISZ");
         newPost.setUserId(userId);
 

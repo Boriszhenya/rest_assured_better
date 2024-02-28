@@ -41,7 +41,6 @@ public class TodosTest extends BaseHomeWorkTest {
                 .body("$", hasSize(Integer.parseInt(perPage)));
     }
 
-
     @Test
     public void newTodoUsersCreation() {
 
@@ -58,7 +57,6 @@ public class TodosTest extends BaseHomeWorkTest {
                         newUsersTodo,
                         Todos.class
                 );
-
         assertEquals(actualUsersTodo, newUsersTodo);
     }
 

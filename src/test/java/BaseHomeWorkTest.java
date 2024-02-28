@@ -47,6 +47,21 @@ public class BaseHomeWorkTest {
                         .getInt(path);
     }
 
+    public static String getVolume(String endpoint, String name) {
+        String path = "[1]." + name;
+        return
+                given()
+                        .when()
+                        .get(getConfig("objectPathV2") + getConfig(endpoint))
+                        .then()
+                        .statusCode(200)
+                        .log().ifValidationFails()
+                        .extract()
+                        .jsonPath()
+                        .get(path);
+    }
+
+
     public static String getConfig(String key) {
         return properties.getProperty(key);
     }

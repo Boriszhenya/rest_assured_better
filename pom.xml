@@ -15,6 +15,7 @@
         <aspectj.version>1.9.6</aspectj.version>
     </properties>
     <dependencies>
+
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>

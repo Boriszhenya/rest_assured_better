@@ -3,6 +3,8 @@ import io.restassured.http.ContentType;
 import org.example.AuthenticationFilter;
 import org.example.NewUser;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static Utils.ApiWrapper.TOKEN;
 import static io.restassured.RestAssured.given;
@@ -11,18 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NegativeTest extends BaseHomeWorkTest {
 
-    @Test
-    public void patchEmptyNameUsers() {
+    @ParameterizedTest
+    @ValueSource(strings = {"  ", ""})
+    public void patchEmptyNameUsers(String input) {
         int userId = getId("endPointUsers", "id");
-
         String nameCheckedField = "name";
-        String valueCheckedField = " ";
 
         try {
             given()
                     .pathParams("id", userId)
                     .filter(new AuthenticationFilter(TOKEN))
-                    .body("{ \"" + nameCheckedField + "\": \"" + valueCheckedField + "\" }")
+                    .body("{ \"" + nameCheckedField + "\": \"" + input + "\" }")
                     .contentType(ContentType.JSON)
                     .when()
                     .patch(getConfig("objectPathV2")
@@ -40,12 +41,57 @@ public class NegativeTest extends BaseHomeWorkTest {
         }
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"  ", "", "m"})
+    public void patchNegativeGenderUsers(String input) {
+        int userId = getId("endPointUsers", "id");
+        String nameCheckedField = "gender";
+
+        given()
+                .pathParams("id", userId)
+                .filter(new AuthenticationFilter(TOKEN))
+                .body("{ \"" + nameCheckedField + "\": \"" + input + "\" }")
+                .contentType(ContentType.JSON)
+                .when()
+                .patch(getConfig("objectPathV2")
+                        + getConfig("objectIdPath"))
+                .then()
+                .statusCode(422)
+                .contentType(ContentType.JSON)
+                .log().ifValidationFails()
+                .body("[0].field", equalTo("gender"))
+                .body("[0].message", equalTo("can't be blank, can be male of female"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"boris.gmail.com", "boris@gmail.com ", " boris@gmail.com", "@gmail.com"})
+    public void patchNegativeEmailUsers(String input) {
+        int userId = getId("endPointUsers", "id");
+        String nameCheckedField = "email";
+
+        given()
+                .pathParams("id", userId)
+                .filter(new AuthenticationFilter(TOKEN))
+                .body("{ \"" + nameCheckedField + "\": \"" + input + "\" }")
+                .contentType(ContentType.JSON)
+                .when()
+                .patch(getConfig("objectPathV2")
+                        + getConfig("objectIdPath"))
+                .then()
+                .statusCode(422)
+                .contentType(ContentType.JSON)
+                .log().ifValidationFails()
+                .body("[0].field", equalTo("email"))
+                .body("[0].message", equalTo("is invalid"));
+    }
+
     @Test
-    public void patchNegativeEmailUsers() {
+
+    public void patchNegativeReturnEmailUsers() {
         int userId = getId("endPointUsers", "id");
 
         String nameCheckedField = "email";
-        String valueCheckedField = "boris.gmail.com";
+        String valueCheckedField = getVolume("endPointUsers", "email");
 
         given()
                 .pathParams("id", userId)
@@ -56,12 +102,11 @@ public class NegativeTest extends BaseHomeWorkTest {
                 .patch(getConfig("objectPathV2")
                         + getConfig("objectIdPath"))
                 .then()
-                .log().all()
                 .statusCode(422)
                 .contentType(ContentType.JSON)
                 .log().ifValidationFails()
                 .body("[0].field", equalTo("email"))
-                .body("[0].message", equalTo("is invalid"));
+                .body("[0].message", equalTo("has already been taken"));
     }
 
 
@@ -81,5 +126,29 @@ public class NegativeTest extends BaseHomeWorkTest {
                 .contentType(ContentType.JSON)
                 .log().ifValidationFails()
                 .body("message", equalTo("Authentication failed"));
+    }
+
+    @Test
+    public void newUserCreationWithoutNullName() {
+        NewUser newUser = TestDataHelper.createUser();
+        newUser.setName(null);
+        try {
+            given()
+                    .filter(new AuthenticationFilter(TOKEN))
+                    .contentType(ContentType.JSON)
+                    .body(newUser)
+                    .when()
+                    .post(getConfig("objectPathV2")
+                            + getConfig("endPointUsers"))
+                    .then()
+                    .assertThat()
+                    .statusCode(422)
+                    .contentType(ContentType.JSON)
+                    .log().ifValidationFails()
+                    .body("..field", equalTo("name"))
+                    .body("..message", equalTo("can't be blank"));
+        } catch (Exception e) {
+            assertEquals(e.getClass(), java.lang.IllegalArgumentException.class);
+        }
     }
 }

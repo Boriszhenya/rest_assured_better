@@ -2,7 +2,6 @@ import Utils.ApiWrapper;
 import Utils.TestDataHelper;
 import org.example.NewUser;
 import org.junit.jupiter.api.Test;
-
 import static Utils.ApiWrapper.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;

@@ -14,9 +14,6 @@ public class ApiWrapper {
     private final static int DEFAULT_STATUS_CODE_POST = 201;
     private final static int DEFAULT_STATUS_CODE_PUT = 200;
     private final static int DEFAULT_STATUS_CODE_DELETE = 204;
-
-///    public final static String TOKEN = "e2d891897138eafe9cddfe43eeebf508ae3b2ddfbb8920fdc3088e1a757d7368";
-
     public final static String TOKEN = "056f978451fd22e35ef5745d1e5e5c660b5eac7eab756769808c4fa27765aa44";
 
     public static <T> T sendPostRequest(RequestSpecification requestSpecification,
@@ -30,13 +27,11 @@ public class ApiWrapper {
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
-                // .log().all()
                 .post(endpoint)
                 .then()
                 .assertThat()
                 .statusCode(statusCode)
                 .contentType(ContentType.JSON)
-                // .log().all()
                 .log().ifValidationFails()
                 .extract().as(responseType);
     }
@@ -67,13 +62,11 @@ public class ApiWrapper {
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
-                //.log().all()
                 .put(endpoint)
                 .then()
                 .assertThat()
                 .statusCode(DEFAULT_STATUS_CODE_PUT)
                 .contentType(ContentType.JSON)
-                //.log().all()
                 .log().ifValidationFails()
                 .extract().as(responseType);
     }
@@ -89,11 +82,9 @@ public class ApiWrapper {
                 .spec(requestSpecification)
                 .body("{ \"" + nameCheckedField + "\": \"" + valueCheckedField + "\" }")
                 .contentType(ContentType.JSON)
-                //.log().all()
                 .when()
                 .patch(callPath)
                 .then()
-                //.log().all()
                 .statusCode(statusCode)
                 .contentType(ContentType.JSON)
                 .log().ifValidationFails()
@@ -120,12 +111,10 @@ public class ApiWrapper {
         return given()
                 .spec(requestSpecification)
                 .when()
-                //.log().all()
                 .get(callPath)
                 .then()
                 .statusCode(statusCode)
                 .contentType(ContentType.JSON)
-                //.log().all()
                 .log().ifValidationFails();
     }
 
@@ -148,7 +137,6 @@ public class ApiWrapper {
                 .filter(new AuthenticationFilter(TOKEN))
                 .spec(requestSpecification)
                 .when()
-                //.log().all()
                 .delete(callPath)
                 .then()
                 .log().ifValidationFails()

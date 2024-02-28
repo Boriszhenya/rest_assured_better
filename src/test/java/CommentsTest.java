@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CommentsTest extends BaseHomeWorkTest {
 
 
+
+
     @Test
     public void schemeCommentsValidationTest() {
         sendGetRequest(
@@ -53,7 +55,6 @@ public class CommentsTest extends BaseHomeWorkTest {
                         newPCommentsPost,
                         Comments.class
                 );
-
         assertEquals(actualComments, newPCommentsPost);
     }
 
@@ -104,6 +105,4 @@ public class CommentsTest extends BaseHomeWorkTest {
                 );
         assertEquals(actualComments, comments);
     }
-
-
 }
