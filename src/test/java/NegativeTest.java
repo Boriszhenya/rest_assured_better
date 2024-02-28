@@ -129,26 +129,23 @@ public class NegativeTest extends BaseHomeWorkTest {
     }
 
     @Test
-    public void newUserCreationWithoutNullName() {
+    public void newUserCreationNullName() {
         NewUser newUser = TestDataHelper.createUser();
         newUser.setName(null);
-        try {
-            given()
-                    .filter(new AuthenticationFilter(TOKEN))
-                    .contentType(ContentType.JSON)
-                    .body(newUser)
-                    .when()
-                    .post(getConfig("objectPathV2")
-                            + getConfig("endPointUsers"))
-                    .then()
-                    .assertThat()
-                    .statusCode(422)
-                    .contentType(ContentType.JSON)
-                    .log().ifValidationFails()
-                    .body("..field", equalTo("name"))
-                    .body("..message", equalTo("can't be blank"));
-        } catch (Exception e) {
-            assertEquals(e.getClass(), java.lang.IllegalArgumentException.class);
-        }
+        given()
+                .filter(new AuthenticationFilter(TOKEN))
+                .contentType(ContentType.JSON)
+                .body(newUser)
+                .when()
+                .post(getConfig("objectPathV2")
+                        + getConfig("endPointUsers"))
+                .then()
+                .assertThat()
+                .statusCode(422)
+                .contentType(ContentType.JSON)
+                .log().ifValidationFails()
+                .body("[0].field", equalTo("name"))
+                .body("[0].message ", equalTo("can't be blank"));
+
     }
 }

@@ -10,10 +10,8 @@ import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
 
-
 public class BaseHomeWorkTest {
     protected static Properties properties;
-
 
     @BeforeAll
     public static void globalSetUp() {
