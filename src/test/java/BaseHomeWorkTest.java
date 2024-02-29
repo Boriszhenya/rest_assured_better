@@ -1,5 +1,6 @@
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,7 @@ public class BaseHomeWorkTest {
     }
 
     public static int getId(String endpoint, String nameId) {
+
         String path = "[0]." + nameId;
         return
                 given()
@@ -45,12 +47,26 @@ public class BaseHomeWorkTest {
                         .getInt(path);
     }
 
+    public static Response getListId(String endpoint) {
+
+        return given()
+                .when()
+                .get(getConfig("objectPathV2") +
+                        getConfig(endpoint))
+                .then()
+                .statusCode(200)
+                .log().ifValidationFails()
+                .extract()
+                .response();
+    }
+
     public static String getVolume(String endpoint, String name) {
         String path = "[1]." + name;
         return
                 given()
                         .when()
-                        .get(getConfig("objectPathV2") + getConfig(endpoint))
+                        .get(getConfig("objectPathV2") +
+                                getConfig(endpoint))
                         .then()
                         .statusCode(200)
                         .log().ifValidationFails()

@@ -1,6 +1,8 @@
 import Utils.ApiWrapper;
 import Utils.TestDataHelper;
+import io.restassured.response.Response;
 import org.example.Comments;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static Utils.ApiWrapper.*;
@@ -83,14 +85,17 @@ public class CommentsTest extends BaseHomeWorkTest {
     }
 
     @Test
-    public void putNameComment() {
+      public void putNameComment() {
 
-        int id = getId("objectCommentsPostPath", "id");
-        int postId = getId("objectCommentsPostPath", "post_id");
+        Response response = getListId("objectCommentsPostPath");
+        int id = response.jsonPath().getInt("[0]."+"id");
+        int postId = response.jsonPath().getInt("[0]."+"post_id");
 
-        Comments comments = TestDataHelper.createComments(id);
+        Comments comments = TestDataHelper.createComments(postId);
+
         comments.setName("BORISZ");
-        comments.setPostID(postId);
+        //comments.setID(id);
+
 
         Comments actualComments =
                 ApiWrapper.sendPutRequest(
@@ -100,6 +105,7 @@ public class CommentsTest extends BaseHomeWorkTest {
                         comments,
                         Comments.class
                 );
+
         assertEquals(actualComments, comments);
     }
 }

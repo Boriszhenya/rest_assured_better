@@ -1,6 +1,8 @@
 import Utils.ApiWrapper;
 import Utils.TestDataHelper;
+import io.restassured.response.Response;
 import org.example.Todos;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static Utils.ApiWrapper.*;
@@ -89,9 +91,12 @@ public class TodosTest extends BaseHomeWorkTest {
     }
 
     @Test
+
     public void putTitleTodo() {
-        int userId = getId("objectToDosPostPath", "user_id");
-        int id = getId("objectToDosPostPath", "id");
+
+        Response response = getListId("objectToDosPostPath");
+        int userId = response.jsonPath().getInt("[0]."+"user_id");
+        int id = response.jsonPath().getInt("[0]."+"id");
 
         Todos newTodos = TestDataHelper.createTodos(userId);
         newTodos.setTitle("BORIS");

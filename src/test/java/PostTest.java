@@ -1,6 +1,8 @@
 import Utils.ApiWrapper;
 import Utils.TestDataHelper;
+import io.restassured.response.Response;
 import org.example.Post;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static Utils.ApiWrapper.*;
@@ -89,10 +91,13 @@ public class PostTest extends BaseHomeWorkTest {
     }
 
     @Test
+
     public void putTitlePost() {
 
-        int userId = getId("objectPostPath", "user_id");
-        int id = getId("objectPostPath", "id");
+        Response response = getListId("objectPostPath");
+        int userId = response.jsonPath().getInt("[0]."+"user_id");
+        int id = response.jsonPath().getInt("[0]."+"id");
+
 
         Post newPost = TestDataHelper.createPost(id);
         newPost.setTitle("BORISZ");
