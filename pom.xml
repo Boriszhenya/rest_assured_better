@@ -20,7 +20,7 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>5.4.0</version>
+            <version>5.5.5</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
@@ -33,26 +33,26 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.16.1</version>
+            <version>2.19.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.networknt/json-schema-validator -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>5.4.0</version>
+            <version>5.5.5</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit5 -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>2.25.0</version>
+            <version>2.29.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
-            <version>2.25.0</version>
+            <version>2.29.1</version>
         </dependency>
 
         <dependency>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.14</version>
+            <version>1.5.18</version>
         </dependency>
     </dependencies>
 
@@ -150,3 +150,6 @@
         </plugins>
     </build>
 </project>
+
+        <!-- mvn clean test generate-test-resources allure::report process-test-resources allure::serve -->
+        <!--allure serve target/allure-results-->
