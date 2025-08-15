@@ -1,4 +1,5 @@
 import io.qameta.allure.restassured.AllureRestAssured;
+
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
