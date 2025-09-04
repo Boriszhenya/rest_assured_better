@@ -44,6 +44,7 @@ public class PostTest extends BaseHomeWorkTest {
     }
 
 
+
     @Test
     public void newPostCreation() {
         int postUserId = getId("objectPostPath", "user_id");
