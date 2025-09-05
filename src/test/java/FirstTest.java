@@ -15,6 +15,7 @@ public class FirstTest extends BaseHomeWorkTest {
                 .then().assertThat()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
+                .body(matchesJsonSchemaInClasspath("schema.json"))
                 //.log().ifValidationFails();
                 .log().all();
     }
