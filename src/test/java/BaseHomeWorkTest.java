@@ -27,53 +27,53 @@ public class BaseHomeWorkTest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = getConfig("baseURIGorest");
+        RestAssured.baseURI = getConfig("baseURIVoriq");
         RestAssured.filters(new AllureRestAssured());
     }
 
-    public static int getId(String endpoint, String nameId) {
-
-        String path = "[0]." + nameId;
-        return
-                given()
-                        .when()
-                        .get(getConfig("objectPathV2") +
-                                getConfig(endpoint))
-                        .then()
-                        .statusCode(200)
-                        .log().ifValidationFails()
-                        .extract()
-                        .jsonPath()
-                        .getInt(path);
-    }
-
-    public static Response getListId(String endpoint) {
-
-        return given()
-                .when()
-                .get(getConfig("objectPathV2") +
-                        getConfig(endpoint))
-                .then()
-                .statusCode(200)
-                .log().ifValidationFails()
-                .extract()
-                .response();
-    }
-
-    public static String getVolume(String endpoint, String name) {
-        String path = "[1]." + name;
-        return
-                given()
-                        .when()
-                        .get(getConfig("objectPathV2") +
-                                getConfig(endpoint))
-                        .then()
-                        .statusCode(200)
-                        .log().ifValidationFails()
-                        .extract()
-                        .jsonPath()
-                        .get(path);
-    }
+//    public static int getId(String endpoint, String nameId) {
+//
+//        String path = "[0]." + nameId;
+//        return
+//                given()
+//                        .when()
+//                        .get(getConfig("objectPathV2") +
+//                                getConfig(endpoint))
+//                        .then()
+//                        .statusCode(200)
+//                        .log().ifValidationFails()
+//                        .extract()
+//                        .jsonPath()
+//                        .getInt(path);
+//    }
+//
+//    public static Response getListId(String endpoint) {
+//
+//        return given()
+//                .when()
+//                .get(getConfig("objectPathV2") +
+//                        getConfig(endpoint))
+//                .then()
+//                .statusCode(200)
+//                .log().ifValidationFails()
+//                .extract()
+//                .response();
+//    }
+//
+//    public static String getVolume(String endpoint, String name) {
+//        String path = "[1]." + name;
+//        return
+//                given()
+//                        .when()
+//                        .get(getConfig("objectPathV2") +
+//                                getConfig(endpoint))
+//                        .then()
+//                        .statusCode(200)
+//                        .log().ifValidationFails()
+//                        .extract()
+//                        .jsonPath()
+//                        .get(path);
+//    }
 
 
     public static String getConfig(String key) {
