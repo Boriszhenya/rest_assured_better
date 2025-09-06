@@ -8,8 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-
-public class BaseHomeWorkTest {
+public class BaseSecurityTest {
     protected static Properties properties;
 
     @BeforeAll
@@ -25,7 +24,7 @@ public class BaseHomeWorkTest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = getConfig("baseURIVoriq");
+        RestAssured.baseURI = getConfig("baseURISecurityService");
         RestAssured.filters(new AllureRestAssured());
     }
 
